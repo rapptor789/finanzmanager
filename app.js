@@ -59,14 +59,12 @@ bot.dialog('main', [
         var currentTreePosition = userOptions.userOptions;
         var lastElement = "Welches Szenario?";
         level.forEach(function(element) {
-            currentTreePosition = currentTreePosition[element];
+            currentTreePosition = currentTreePosition[element]['values'];
             lastElement = element;
         }, this);
-        console.log(currentTreePosition);
         if (level.length > 0) {
             currentTreePosition["Zurück"] = {};
         }
-        console.log(currentTreePosition);
         builder.Prompts.choice(session, lastElement, currentTreePosition, {
             listStyle: builder.ListStyle['button']
         });

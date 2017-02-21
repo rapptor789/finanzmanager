@@ -2,76 +2,65 @@ var moneyTransferOptions = {
 
 };
 
-exports.userOptions = [
-    {
+exports.userOptions = {
+    "Konto geht gegen Grenzwert 0": {
         "type": "options",
-        "title": "Konto geht gegen Grenzwert 0",
-        "values": [
-            {
+        "values": {
+            "Dispo erhöhen": {
                 "type": "options",
-                "title": "Dispo erhöhen",
-                "values": [
-                    { 
+                "values": {
+                    "Soll das Dispo Limit um den Betrag 1000€ erhöht werden?": { 
                         "type": "options",
-                        "title": "Soll das Dispo Limit um den Betrag 1000€ erhöht werden?",
-                        "values": [
-                            {
-                                "type": "end",
-                                "title": "Ja"
+                        "values": {
+                            "Ja":  {
+                                "type": "end"
                             },
-                            {
-                                "type": "end",
-                                "title": "Nein"
+                            "Nein": {
+                                "type": "end"
                             }
-                        ]
+                        }
                     }
-                ]
+                }
             },
-            {
+            "Geldtranfer / Überweisung": {
                 "type": "options",
-                "title": "Geldtranfer / Überweisung",
-                "values": [
-                    { 
+                "values": {
+                    "Von Welchem Konto soll Geld überwiesen werden?": { 
                         "type": "options",
-                        "title": "Von Welchem Konto soll Geld überwiesen werden?",
-                        "values": [
-                            {
+                        "values": {
+                            "Girokonto": {
                                 "type": "options",
-                                "title": "Girokonto",
                                 "values": moneyTransferOptions
                             },
-                            {
+                            "Tagesgeldkonto": {
                                 "type": "options",
-                                "title": "Tagesgeldkonto",
                                 "values": moneyTransferOptions
                             },
-                            {
+                            "Sparkonto": {
                                 "type": "options",
-                                "title": "Sparkonto",
                                 "values": moneyTransferOptions
                             },
-                            {
+                            "Fremdbank": {
                                 "type": "end",
-                                "title": "Fremdbank",
                                 "values": "Bitte auf den Kundenberater zugehen"
                             }
-                        ]
+                        }
                     }
-                ]
-            },
-            {
+                }
+            }/*,
+            2 = {
                 "type": "options",
                 "title": "Umschuldung auf Ratenkredit",
                 "values": [
-                    { 
+                    0 = { 
                         "type": "options",
                         "title": "Deine voraussichtlichen Ausgaben bis zum nächsten Geldeingang betragen 300€. Möchtest du über diesen Betrag einen Ratenkredit aufnehmen?",
                         "values": [
-                            {
+                            0 = {
                                 "type": "end",
                                 "title": "Ja"
                             },
-                            {
+                            1 = {
                                 "type": "number",
                                 "title": "anderen Betrag wählen"
                             }
@@ -79,30 +68,29 @@ exports.userOptions = [
                     }
                 ]
             },
-            {
+            3 = {
                 "type": "options",
                 "title": "persönliche Beratung",
                 "values": [
-                    { 
+                    0 = { 
                         "type": "end",
                         "title": "Telefonnummer des Bankberaters anzeigen [ANRUFEN]",
                     },
-                    { 
+                    1 = { 
                         "type": "end",
                         "title": "Chat öffnen",
                     },
-                    { 
+                    2 = { 
                         "type": "end",
                         "title": "Um Rückruf bitten",
                     }
                 ]
-            }      
+            }*/      
             
             
-        ]
+        }
     },
-    {
-        "type": "end",
-        "title": "Kredikartenlimit überschritten"
+    "Kredikartenlimit überschritten": {
+        "type": "end"
     }
-];
+};
