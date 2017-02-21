@@ -30,14 +30,6 @@ bot.dialog('/', [
     function(session, results) {
         session.send("Moin");
         session.beginDialog('main', results);
-    },
-    function(session, results) {
-        if (results.response) {
-            var region = salesData[results.response.entity];
-            session.send("We sold %(units)d units for a total of %(total)s.", region);
-        } else {
-            session.send("ok");
-        }
     }
 ]);
 
@@ -49,14 +41,23 @@ bot.dialog('main', [
             currentTreePosition = currentTreePosition[element];
             lastElement = element;
         }, this);
-
+        console.log(currentTreePosition);
+        if (level.length > 0) {
+            currentTreePosition["Zurück"] = {};
+        }
+        console.log(currentTreePosition);
         builder.Prompts.choice(session, lastElement, currentTreePosition, {
             listStyle: builder.ListStyle['button']
         });
     },
-    function (session, results) {
+    function(session, results) {
+
         if (results && results.response) {
-            level.push(results.response.entity);
+            if (results.response.entity == "Zurück") {
+                level.pop();
+            } else {
+                level.push(results.response.entity);
+            }
         }
         session.replaceDialog('main');
     }
