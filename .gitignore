@@ -31,6 +31,7 @@ _.*
 .metadata
 .project
 .settings
+.tern-project
 .tmp*
 *.prefs
 atlassian-ide-plugin.xml
