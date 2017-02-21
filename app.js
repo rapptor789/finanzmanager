@@ -25,11 +25,32 @@ server.post('/api/messages', connector.listen());
 //=========================================================
 
 var level = [];
+var validUserNames = new Array('max','moritz','hana');
 
 bot.dialog('/', [
+    function(session) {
+        session.beginDialog('auth');
+    },
     function(session, results) {
-        session.send("Moin");
-        session.beginDialog('main', results);
+        session.send("Hallo");
+        session.beginDialog('main');
+    }
+]);
+
+bot.dialog('auth', [
+    function(session) {
+        builder.Prompts.text(session, "Hallo, hier ist der Finanzmanager. Bitte loggen Sie sich ein (Max, Moritz, Hana)");
+    },
+    function(session, results) {
+        if (validUserNames.indexOf(results.response.toLowerCase()) != -1) {
+            session.send("Hallo %s", results.response);
+            session.userData.name = results.response;
+            session.endDialog();
+        }
+        else{
+          session.send("Username ungültig. (Max, Moritz, Hana)");
+          session.replaceDialog('auth');
+        }
     }
 ]);
 
