@@ -24,26 +24,13 @@ server.post('/api/messages', connector.listen());
 // Bots Dialogs
 //=========================================================
 
-var salesData = {
-    "Kleinkredit aufnehmen": {
-        units: 200,
-        total: "$6,000"
-    },
-    "Von Tagesgeldkonto Geld tranferieren": {
-        units: 100,
-        total: "$3,000"
-    },
-    "Alles OK nichts tun": {
-        units: 300,
-        total: "$9,000"
-    }
-};
+var level = [];
 
 bot.dialog('/', [
     function(session) {
         session.send("Moin");
         session.beginDialog('main');
-    },
+    }/*,
     function(session, results) {
         if (results.response) {
             var region = salesData[results.response.entity];
@@ -51,11 +38,30 @@ bot.dialog('/', [
         } else {
             session.send("ok");
         }
-    }
+    }*/
 ]);
 
-bot.dialog('main', [function(session) {
-    builder.Prompts.choice(session, "Dein Girokonto ist im Minus... Wir haben folgende Optionen für Dich ermittelt:", userOptions.userOptions, {
-        listStyle: builder.ListStyle['button']
-    });
-}]);
+bot.dialog('main', [
+    function(session) {
+        var currentTreePosition = userOptions.userOptions;
+        var lastElement = "Welches Szenario?";
+        level.forEach(function(element) {
+            console.log(element);
+            currentTreePosition = currentTreePosition[element];
+            lastElement = element;
+        }, this);
+        console.log(currentTreePosition);
+
+        builder.Prompts.choice(session, "lastElement", currentTreePosition, {
+            listStyle: builder.ListStyle['button']
+        });
+    },
+    function (session, results) {
+        if (results && results.response) {
+            console.log(results.response.entity);
+            level.push(results.response.entity);
+            session.send("Du hast: " + results.response.entity + " gewählt!");
+        }
+        session.replaceDialog('main');
+    }
+]);
