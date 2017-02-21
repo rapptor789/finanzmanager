@@ -58,16 +58,21 @@ bot.dialog('main', [
     function(session) {
         var currentTreePosition = userOptions.userOptions;
         var lastElement = "Welches Szenario?";
+        var lastType = "options";
         level.forEach(function(element) {
-            currentTreePosition = currentTreePosition[element]['values'];
+            lastType = currentTreePosition[element]['type'];
+            currentTreePosition = currentTreePosition[element]['values'];        
             lastElement = element;
         }, this);
         if (level.length > 0) {
             currentTreePosition["Zurück"] = {};
         }
-        builder.Prompts.choice(session, lastElement, currentTreePosition, {
-            listStyle: builder.ListStyle['button']
-        });
+        console.log(lastType);
+        if (lastType == 'options') {
+            builder.Prompts.choice(session, lastElement, currentTreePosition, {
+                listStyle: builder.ListStyle['button']
+            });
+        }
     },
     function(session, results) {
 
