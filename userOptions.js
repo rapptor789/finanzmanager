@@ -2,7 +2,7 @@ var moneyTransferOptions = {
 
 };
 
-var userOptions = {
+exports.userOptions = {
     "Konto geht gegen Grenzwert 0": {
         "Dispo erhöhen": {
             "Soll das Dispo Limit um den Betrag 1000€ erhöht werden?": [
@@ -30,7 +30,7 @@ var userOptions = {
             "Telefonnummer des Bankberaters anzeigen [ANRUFEN]",
             "Chat öffnen",
             "Um Rückruf bitten",
-            "zurück zur Auswahl"            
+            "zurück zur Auswahl"
         ]
     },
     "Kredikartenlimit überschritten": {

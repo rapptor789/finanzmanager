@@ -1,6 +1,6 @@
 var restify = require('restify');
 var builder = require('botbuilder');
-var userOptions = require('./userOptions.js')
+var userOptions = require('./userOptions');
 
 //=========================================================
 // Bot Setup
@@ -8,10 +8,10 @@ var userOptions = require('./userOptions.js')
 
 // Setup Restify Server
 var server = restify.createServer();
-server.listen(process.env.port || process.env.PORT || 3978, function () {
-   console.log('%s listening to %s', server.name, server.url); 
+server.listen(process.env.port || process.env.PORT || 3978, function() {
+    console.log('%s listening to %s', server.name, server.url);
 });
-  
+
 // Create chat bot
 var connector = new builder.ChatConnector({
     appId: "", // process.env.MICROSOFT_APP_ID,
@@ -24,17 +24,38 @@ server.post('/api/messages', connector.listen());
 // Bots Dialogs
 //=========================================================
 
-bot.dialog('/', [
-    function (session) {
-        builder.Prompts.choice(session, "Wähle eine Option was passieren soll ;-):", userOptions, {listStyle: builder.ListStyle['button']}); 
+var salesData = {
+    "Kleinkredit aufnehmen": {
+        units: 200,
+        total: "$6,000"
     },
-    function (session, results) {
-        if (results.response) {  
-            var userChoice = userOptions["Girokonto Minus"][results.response.entity];
-            session.send(userChoice + "We sold %(units)d units for a total of %(total)s.", userChoice); 
+    "Von Tagesgeldkonto Geld tranferieren": {
+        units: 100,
+        total: "$3,000"
+    },
+    "Alles OK nichts tun": {
+        units: 300,
+        total: "$9,000"
+    }
+};
 
+bot.dialog('/', [
+    function(session) {
+        session.send("Moin");
+        session.beginDialog('main');
+    },
+    function(session, results) {
+        if (results.response) {
+            var region = salesData[results.response.entity];
+            session.send("We sold %(units)d units for a total of %(total)s.", region);
         } else {
             session.send("ok");
         }
     }
 ]);
+
+bot.dialog('main', [function(session) {
+    builder.Prompts.choice(session, "Dein Girokonto ist im Minus... Wir haben folgende Optionen für Dich ermittelt:", userOptions.userOptions, {
+        listStyle: builder.ListStyle['button']
+    });
+}]);
