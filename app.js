@@ -1,5 +1,6 @@
 var restify = require('restify');
 var builder = require('botbuilder');
+var userOptions = require('./userOptions.js')
 
 //=========================================================
 // Bot Setup
@@ -23,29 +24,15 @@ server.post('/api/messages', connector.listen());
 // Bots Dialogs
 //=========================================================
 
-var salesData = {
-    "Kleinkredit aufnehmen": {
-        units: 200,
-        total: "$6,000"
-    },
-    "Von Tagesgeldkonto Geld tranferieren": {
-        units: 100,
-        total: "$3,000"
-    },
-    "Alles OK nichts tun": {
-        units: 300,
-        total: "$9,000"
-    }
-};
-
 bot.dialog('/', [
     function (session) {
-        builder.Prompts.choice(session, "Dein Girokonto ist im Minus... Wir haben folgende Optionen für Dich ermittelt:", salesData, {listStyle: builder.ListStyle['button']}); 
+        builder.Prompts.choice(session, "Wähle eine Option was passieren soll ;-):", userOptions, {listStyle: builder.ListStyle['button']}); 
     },
     function (session, results) {
-        if (results.response) {
-            var region = salesData[results.response.entity];
-            session.send("We sold %(units)d units for a total of %(total)s.", region); 
+        if (results.response) {  
+            var userChoice = userOptions["Girokonto Minus"][results.response.entity];
+            session.send(userChoice + "We sold %(units)d units for a total of %(total)s.", userChoice); 
+
         } else {
             session.send("ok");
         }
