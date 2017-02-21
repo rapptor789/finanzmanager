@@ -1,0 +1,37 @@
+# git svn show-ignore
+#
+# Patterns in alphabetical order (ignoring special characters):
+
+bin
+*.class
+.classpath
+.pmd
+target/
+*.swp
+*.backup
+*.log
+node_modules
+
+# excldue IntelliJ Idea project files
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+*.xml~
+*.bat
+
+# IDE
+_.*
+.buildpath
+.cache
+.config
+.deployables
+.idea
+.metadata
+.project
+.settings
+.tmp*
+*.prefs
+atlassian-ide-plugin.xml
+.checkstyle

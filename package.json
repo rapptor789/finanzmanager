@@ -1,0 +1,14 @@
+{
+  "name": "finanzmanger-bot",
+  "version": "1.0.0",
+  "description": "Finanzmanager Bot mit Microsoft Toolstack",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Team 1",
+  "dependencies": {
+    "botbuilder": "^3.5.3",
+    "restify": "^4.3.0"
+  }
+}
