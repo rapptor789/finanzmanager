@@ -27,10 +27,10 @@ server.post('/api/messages', connector.listen());
 var level = [];
 
 bot.dialog('/', [
-    function(session) {
+    function(session, results) {
         session.send("Moin");
-        session.beginDialog('main');
-    }/*,
+        session.beginDialog('main', results);
+    },
     function(session, results) {
         if (results.response) {
             var region = salesData[results.response.entity];
@@ -38,7 +38,7 @@ bot.dialog('/', [
         } else {
             session.send("ok");
         }
-    }*/
+    }
 ]);
 
 bot.dialog('main', [
@@ -46,21 +46,17 @@ bot.dialog('main', [
         var currentTreePosition = userOptions.userOptions;
         var lastElement = "Welches Szenario?";
         level.forEach(function(element) {
-            console.log(element);
             currentTreePosition = currentTreePosition[element];
             lastElement = element;
         }, this);
-        console.log(currentTreePosition);
 
-        builder.Prompts.choice(session, "lastElement", currentTreePosition, {
+        builder.Prompts.choice(session, lastElement, currentTreePosition, {
             listStyle: builder.ListStyle['button']
         });
     },
     function (session, results) {
         if (results && results.response) {
-            console.log(results.response.entity);
             level.push(results.response.entity);
-            session.send("Du hast: " + results.response.entity + " gewählt!");
         }
         session.replaceDialog('main');
     }
