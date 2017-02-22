@@ -14,8 +14,8 @@ server.listen(process.env.port || process.env.PORT || 3978, function() {
 
 // Create chat bot
 var connector = new builder.ChatConnector({
-    appId: "", // process.env.MICROSOFT_APP_ID,
-    appPassword: "" // process.env.MICROSOFT_APP_PASSWORD
+    appId: process.env.MICROSOFT_APP_ID,
+    appPassword: sprocess.env.MICROSOFT_APP_PASSWORD
 });
 var bot = new builder.UniversalBot(connector);
 server.post('/api/messages', connector.listen());
@@ -60,9 +60,21 @@ bot.dialog('main', [
         session.userData.lastType = "options";
         level.forEach(function(element) {
             session.userData.lastType = currentTreePosition[element]['type'];
-            currentTreePosition = currentTreePosition[element]['values'];        
+            currentTreePosition = currentTreePosition[element]['values']; 
             lastElement = element;
         }, this);
+        if (session.userData.lastType == "flow") {
+            Object.keys(currentTreePosition).forEach(function(element) {
+                level.push(element);
+                session.userData.lastType = currentTreePosition[element]['type'];
+                currentTreePosition = currentTreePosition[element]['values']; 
+                lastElement = element;
+            });
+            
+            /*session.userData.lastType = currentTreePosition['type'];
+            currentTreePosition = currentTreePosition['values'];
+            lastElement = Object.keys(lastElement);*/
+        }
         if (session.userData.lastType == "options" && level.length > 0) {
             currentTreePosition["Zurück"] = {};
         }

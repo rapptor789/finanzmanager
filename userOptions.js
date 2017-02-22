@@ -1,5 +1,13 @@
 var moneyTransferOptions = {
-
+    "200 €":  {
+        "type": "end"
+    },
+    "300 €": {
+        "type": "end"
+    },
+    "Betrag eingeben": {
+        "type": "number" 
+    }
 };
 
 exports.userOptions = {
@@ -23,7 +31,7 @@ exports.userOptions = {
                 }
             },
             "Geldtranfer / Überweisung": {
-                "type": "options",
+                "type": "flow",
                 "values": {
                     "Von Welchem Konto soll Geld überwiesen werden?": { 
                         "type": "options",
@@ -49,7 +57,7 @@ exports.userOptions = {
                 }
             },
             "Umschuldung auf Ratenkredit": {
-                "type": "options",
+                "type": "flow",
                 "values": {
                     "Deine voraussichtlichen Ausgaben bis zum nächsten Geldeingang betragen 300€. Möchtest du über diesen Betrag einen Ratenkredit aufnehmen?": { 
                         "type": "options",
