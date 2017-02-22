@@ -47,47 +47,37 @@ exports.userOptions = {
                         }
                     }
                 }
-            }/*,
-            2 = {
-                "type": "options",
-                "title": "Umschuldung auf Ratenkredit",
-                "values": [
-                    0 = { 
-                        "type": "options",
-                        "title": "Deine voraussichtlichen Ausgaben bis zum nächsten Geldeingang betragen 300€. Möchtest du über diesen Betrag einen Ratenkredit aufnehmen?",
-                        "values": [
-                            0 = {
-                                "type": "end",
-                                "title": "Ja"
-                            },
-                            1 = {
-                                "type": "number",
-                                "title": "anderen Betrag wählen"
-                            }
-                        ]
-                    }
-                ]
             },
-            3 = {
+            "Umschuldung auf Ratenkredit": {
                 "type": "options",
-                "title": "persönliche Beratung",
-                "values": [
-                    0 = { 
-                        "type": "end",
-                        "title": "Telefonnummer des Bankberaters anzeigen [ANRUFEN]",
-                    },
-                    1 = { 
-                        "type": "end",
-                        "title": "Chat öffnen",
-                    },
-                    2 = { 
-                        "type": "end",
-                        "title": "Um Rückruf bitten",
+                "values": {
+                    "Deine voraussichtlichen Ausgaben bis zum nächsten Geldeingang betragen 300€. Möchtest du über diesen Betrag einen Ratenkredit aufnehmen?": { 
+                        "type": "options",
+                        "values": {
+                            "Ja": {
+                                "type": "end"
+                            },
+                            "Betrag eingeben": {
+                                "type": "number" 
+                            }
+                        }
                     }
-                ]
-            }*/      
-            
-            
+                }
+            },
+            "persönliche Beratung": {
+                "type": "options",
+                "values": {
+                    "Telefonnummer des Bankberaters anzeigen [ANRUFEN]": { 
+                        "type": "end"
+                    },
+                    "Chat öffnen": { 
+                        "type": "end"
+                    },
+                    "Um Rückruf bitten": { 
+                        "type": "end"
+                    }
+                }
+            }          
         }
     },
     "Kredikartenlimit überschritten": {

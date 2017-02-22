@@ -32,7 +32,6 @@ bot.dialog('/', [
         session.beginDialog('auth');
     },
     function(session, results) {
-        session.send("Hallo");
         session.beginDialog('main');
     }
 ]);
@@ -58,31 +57,44 @@ bot.dialog('main', [
     function(session) {
         var currentTreePosition = userOptions.userOptions;
         var lastElement = "Welches Szenario?";
-        var lastType = "options";
+        session.userData.lastType = "options";
         level.forEach(function(element) {
-            lastType = currentTreePosition[element]['type'];
+            session.userData.lastType = currentTreePosition[element]['type'];
             currentTreePosition = currentTreePosition[element]['values'];        
             lastElement = element;
         }, this);
-        if (level.length > 0) {
+        if (session.userData.lastType == "options" && level.length > 0) {
             currentTreePosition["Zurück"] = {};
         }
-        console.log(lastType);
-        if (lastType == 'options') {
+        if (session.userData.lastType == 'options') {
             builder.Prompts.choice(session, lastElement, currentTreePosition, {
                 listStyle: builder.ListStyle['button']
             });
+        } else if (session.userData.lastType == 'number') {
+            builder.Prompts.number(session, lastElement);
         }
     },
     function(session, results) {
 
         if (results && results.response) {
-            if (results.response.entity == "Zurück") {
-                level.pop();
-            } else {
-                level.push(results.response.entity);
+            // options
+            if (results.response.entity) {
+                if (results.response.entity == "Zurück") {
+                    level.pop();
+                } else {
+                    level.push(results.response.entity);
+                } 
+            } else if (results.response) {
+                session.userData.requestedValue = results.response;
             }
+
         }
-        session.replaceDialog('main');
+        if (level.length > 0 && (session.userData.lastType == "end" || session.userData.lastType == "number")) {
+            session.send("Vielen Dank für die Nutzung des Finanzmanagers. Ihr Auftrag wurde ausgeführt.")
+            session.endDialog();
+        } else {
+            session.replaceDialog('main');
+        }
+        
     }
-]);
+]);2
