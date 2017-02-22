@@ -43,6 +43,7 @@ bot.dialog('auth', [
     function(session, results) {
         if (validUserNames.indexOf(results.response.toLowerCase()) != -1) {
             session.send("Hallo %s", results.response);
+            session.userData.flows = [];
             session.userData.name = results.response;
             session.endDialog();
         } else {
@@ -65,15 +66,17 @@ bot.dialog('main', [
         if (session.userData.lastType == "flow") {
             Object.keys(currentTreePosition).forEach(function(element) {
                 level.push(element);
-                session.userData.lastType = currentTreePosition[element]['type'];
-                currentTreePosition = currentTreePosition[element]['values'];
-                lastElement = element;
+                if (session.userData.flows.indexOf(element) != -1) {
+                    session.userData.flows.pop();
+                    level.pop();
+                    level.pop();
+                } else {
+                    session.userData.flows.push(element);
+                    session.userData.lastType = currentTreePosition[element]['type'];
+                    currentTreePosition = currentTreePosition[element]['values'];
+                    lastElement = element;
+                }
             });
-
-
-            /*session.userData.lastType = currentTreePosition['type'];
-            currentTreePosition = currentTreePosition['values'];
-            lastElement = Object.keys(lastElement);*/
         }
         if (session.userData.lastType == "end") {
             session.send("Vielen Dank für die Nutzung des Finanzmanagers. Ihr Auftrag wurde ausgeführt.")
@@ -93,6 +96,9 @@ bot.dialog('main', [
         } else if (session.userData.lastType == 'number') {
             builder.Prompts.number(session, lastElement);
         }
+        else if(session.userData.lastType != 'end'){
+          session.replaceDialog('main');
+        }
     },
     function(session, results) {
 
@@ -107,7 +113,6 @@ bot.dialog('main', [
             } else if (results.response) {
                 session.userData.requestedValue = results.response;
             }
-
         }
         console.log(session.userData.lastType);
         if (level.length > 0 && (session.userData.lastType == "end" || session.userData.lastType == "number")) {

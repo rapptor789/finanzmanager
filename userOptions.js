@@ -1,5 +1,5 @@
 var moneyTransferOptions = {
-    "200 €":  {
+    "200 €": {
         "type": "end"
     },
     "300 €": {
@@ -7,6 +7,18 @@ var moneyTransferOptions = {
     },
     "Betrag eingeben": {
         "type": "number"
+    }
+};
+
+var bankConsultantOptions = {
+    "Telefonnummer des Bankberaters anzeigen [ANRUFEN]": {
+        "type": "end"
+    },
+    "Chat öffnen": {
+        "type": "end"
+    },
+    "Um Rückruf bitten": {
+        "type": "end"
     }
 };
 
@@ -20,8 +32,12 @@ exports.userOptions = {
                     "Soll das Dispo Limit um den Betrag 1000€ erhöht werden?": {
                         "type": "options",
                         "values": {
-                            "Ja":  {
+                            "Ja": {
                                 "type": "end"
+                            },
+                            "Anderer Betrag": {
+                                "type": "options",
+                                "values": moneyTransferOptions
                             },
                             "Nein": {
                                 "type": "end"
@@ -49,8 +65,13 @@ exports.userOptions = {
                                 "values": moneyTransferOptions
                             },
                             "Fremdbank": {
-                                "type": "end",
-                                "values": "Bitte auf den Kundenberater zugehen"
+                                "type": "flow",
+                                "values": {
+                                    "Bitte auf den Kundenberater zugehen": {
+                                        "type": "options",
+                                        "values": bankConsultantOptions
+                                    }
+                                }
                             }
                         }
                     }
@@ -89,6 +110,29 @@ exports.userOptions = {
         }
     },
     "Kredikartenlimit überschritten": {
-        "type": "end"
+        "type": "options",
+        "values": {
+            "Kreditkartenlimit erhöhen": {
+                "type": "options",
+                "values": moneyTransferOptions
+            },
+            "persönliche Beratung": {
+                "type": "options",
+                "values": {
+                    "Telefonnummer des Bankberaters anzeigen [ANRUFEN]": {
+                        "type": "end"
+                    },
+                    "Chat öffnen": {
+                        "type": "end"
+                    },
+                    "Um Rückruf bitten": {
+                        "type": "end"
+                    }
+                }
+            },
+            "Keine Aktion durchführen": {
+                "type": "end"
+            }
+        }
     }
 };
