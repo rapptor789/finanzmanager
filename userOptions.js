@@ -46,7 +46,7 @@ exports.userOptions = {
                     }
                 }
             },
-            "Geldtranfer / Überweisung": {
+            "Geldtransfer / Überweisung": {
                 "type": "flow",
                 "values": {
                     "Von Welchem Konto soll Geld überwiesen werden?": {
