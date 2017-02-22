@@ -6,7 +6,7 @@ var moneyTransferOptions = {
         "type": "end"
     },
     "Betrag eingeben": {
-        "type": "number" 
+        "type": "number"
     }
 };
 
@@ -15,9 +15,9 @@ exports.userOptions = {
         "type": "options",
         "values": {
             "Dispo erhöhen": {
-                "type": "options",
+                "type": "flow",
                 "values": {
-                    "Soll das Dispo Limit um den Betrag 1000€ erhöht werden?": { 
+                    "Soll das Dispo Limit um den Betrag 1000€ erhöht werden?": {
                         "type": "options",
                         "values": {
                             "Ja":  {
@@ -33,7 +33,7 @@ exports.userOptions = {
             "Geldtranfer / Überweisung": {
                 "type": "flow",
                 "values": {
-                    "Von Welchem Konto soll Geld überwiesen werden?": { 
+                    "Von Welchem Konto soll Geld überwiesen werden?": {
                         "type": "options",
                         "values": {
                             "Girokonto": {
@@ -59,14 +59,14 @@ exports.userOptions = {
             "Umschuldung auf Ratenkredit": {
                 "type": "flow",
                 "values": {
-                    "Deine voraussichtlichen Ausgaben bis zum nächsten Geldeingang betragen 300€. Möchtest du über diesen Betrag einen Ratenkredit aufnehmen?": { 
+                    "Deine voraussichtlichen Ausgaben bis zum nächsten Geldeingang betragen 300€. Möchtest du über diesen Betrag einen Ratenkredit aufnehmen?": {
                         "type": "options",
                         "values": {
                             "Ja": {
                                 "type": "end"
                             },
                             "Betrag eingeben": {
-                                "type": "number" 
+                                "type": "number"
                             }
                         }
                     }
@@ -75,17 +75,17 @@ exports.userOptions = {
             "persönliche Beratung": {
                 "type": "options",
                 "values": {
-                    "Telefonnummer des Bankberaters anzeigen [ANRUFEN]": { 
+                    "Telefonnummer des Bankberaters anzeigen [ANRUFEN]": {
                         "type": "end"
                     },
-                    "Chat öffnen": { 
+                    "Chat öffnen": {
                         "type": "end"
                     },
-                    "Um Rückruf bitten": { 
+                    "Um Rückruf bitten": {
                         "type": "end"
                     }
                 }
-            }          
+            }
         }
     },
     "Kredikartenlimit überschritten": {

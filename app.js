@@ -25,7 +25,7 @@ server.post('/api/messages', connector.listen());
 //=========================================================
 
 var level = [];
-var validUserNames = new Array('max','moritz','hana');
+var validUserNames = new Array('max', 'moritz', 'hana');
 
 bot.dialog('/', [
     function(session) {
@@ -45,10 +45,9 @@ bot.dialog('auth', [
             session.send("Hallo %s", results.response);
             session.userData.name = results.response;
             session.endDialog();
-        }
-        else{
-          session.send("Username ungültig. (Max, Moritz, Hana)");
-          session.replaceDialog('auth');
+        } else {
+            session.send("Username ungültig. (Max, Moritz, Hana)");
+            session.replaceDialog('auth');
         }
     }
 ]);
@@ -60,20 +59,26 @@ bot.dialog('main', [
         session.userData.lastType = "options";
         level.forEach(function(element) {
             session.userData.lastType = currentTreePosition[element]['type'];
-            currentTreePosition = currentTreePosition[element]['values']; 
+            currentTreePosition = currentTreePosition[element]['values'];
             lastElement = element;
         }, this);
         if (session.userData.lastType == "flow") {
             Object.keys(currentTreePosition).forEach(function(element) {
                 level.push(element);
                 session.userData.lastType = currentTreePosition[element]['type'];
-                currentTreePosition = currentTreePosition[element]['values']; 
+                currentTreePosition = currentTreePosition[element]['values'];
                 lastElement = element;
             });
-            
+
+
             /*session.userData.lastType = currentTreePosition['type'];
             currentTreePosition = currentTreePosition['values'];
             lastElement = Object.keys(lastElement);*/
+        }
+        if (session.userData.lastType == "end") {
+            session.send("Vielen Dank für die Nutzung des Finanzmanagers. Ihr Auftrag wurde ausgeführt.")
+            level = [];
+            session.endDialog();
         }
         if (session.userData.lastType == "options" && level.length > 0) {
             currentTreePosition["Zurück"] = {};
@@ -95,18 +100,21 @@ bot.dialog('main', [
                     level.pop();
                 } else {
                     level.push(results.response.entity);
-                } 
+                }
             } else if (results.response) {
                 session.userData.requestedValue = results.response;
             }
 
         }
+        console.log(session.userData.lastType);
         if (level.length > 0 && (session.userData.lastType == "end" || session.userData.lastType == "number")) {
             session.send("Vielen Dank für die Nutzung des Finanzmanagers. Ihr Auftrag wurde ausgeführt.")
+            level = [];
             session.endDialog();
         } else {
             session.replaceDialog('main');
         }
-        
+
     }
-]);2
+]);
+2
