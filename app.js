@@ -78,6 +78,9 @@ bot.dialog('main', [
         if (session.userData.lastType == "end") {
             session.send("Vielen Dank für die Nutzung des Finanzmanagers. Ihr Auftrag wurde ausgeführt.")
             level = [];
+            session.userData.lastType = null;
+            currentTreePosition = null;
+            lastElement = null;
             session.endDialog();
         }
         if (session.userData.lastType == "options" && level.length > 0) {
@@ -110,6 +113,7 @@ bot.dialog('main', [
         if (level.length > 0 && (session.userData.lastType == "end" || session.userData.lastType == "number")) {
             session.send("Vielen Dank für die Nutzung des Finanzmanagers. Ihr Auftrag wurde ausgeführt.")
             level = [];
+            session.userData.lastType = null;
             session.endDialog();
         } else {
             session.replaceDialog('main');
@@ -117,4 +121,3 @@ bot.dialog('main', [
 
     }
 ]);
-2
